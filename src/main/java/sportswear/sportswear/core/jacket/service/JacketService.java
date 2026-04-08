@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.jacket.domain.Jacket;
 import sportswear.sportswear.core.jacket.rep.JacketRep;
+import sportswear.sportswear.core.jacket.view.JacketView;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class JacketService {
 
     private final JacketRep jacketRep;
 
-    public List<Jacket> getJackets(int page, int size,
+    public JacketView getJackets(int page, int size,
                                    String sizeJacket,
                                    String colour,
                                    String material,
@@ -47,7 +49,11 @@ public class JacketService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeJacket"), sizeJacket));
         }
 
-        return jacketRep.findAll(spec, pageable).getContent();
+        JacketView jacketView = new JacketView();
+        jacketView.setItems(jacketRep.findAll(spec, pageable).getContent());
+        jacketView.setCount(jacketRep.findAll(spec, pageable).getTotalElements());
+
+        return jacketView;
     }
 
     public Jacket getJacketById(Long id) {

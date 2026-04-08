@@ -6,9 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.ball.domain.Ball;
 import sportswear.sportswear.core.inventory.domain.Inventory;
 import sportswear.sportswear.core.inventory.rep.InventoryRep;
+import sportswear.sportswear.core.inventory.view.InventoryView;
 import sportswear.sportswear.core.shoes.domain.Shoes;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class InventoryService {
 
     private final InventoryRep inventoryRep;
 
-    public List<Inventory> getInventory(int page, int size, String colour,  String sortBy, String direction) {
+    public InventoryView getInventory(int page, int size, String colour, String sortBy, String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -36,8 +38,11 @@ public class InventoryService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("colour"), colour));
         }
 
+        InventoryView inventoryView = new InventoryView();
+        inventoryView.setItems(inventoryRep.findAll(spec, pageable).getContent());
+        inventoryView.setCount(inventoryRep.findAll(spec, pageable).getTotalElements());
 
-        return inventoryRep.findAll(spec, pageable).getContent();
+        return inventoryView;
     }
 
     public Inventory getInventoryById(Long id) {

@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.ball.domain.Ball;
 import sportswear.sportswear.core.inventory.domain.Inventory;
 import sportswear.sportswear.core.shoes.domain.Shoes;
 import sportswear.sportswear.core.shoes.rep.ShoesRep;
+import sportswear.sportswear.core.shoes.view.ShoesView;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class ShoesService {
 
     private final ShoesRep shoesRep;
 
-    public List<Shoes> getShoes(int page, int size, Integer sizeShoes, String type, String colour, String material,  String sortBy, String direction) {
+    public ShoesView getShoes(int page, int size, Integer sizeShoes, String type, String colour, String material, String sortBy, String direction) {
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
             sort = direction != null && direction.equalsIgnoreCase("desc")
@@ -44,7 +46,11 @@ public class ShoesService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeBall"), sizeShoes));
         }
 
-        return shoesRep.findAll(spec, pageable).getContent();
+        ShoesView shoesView = new ShoesView();
+        shoesView.setItems(shoesRep.findAll(spec, pageable).getContent());
+        shoesView.setCount(shoesRep.findAll(spec, pageable).getTotalElements());
+
+        return shoesView;
     }
 
     public Shoes getShoesById(Long id) {

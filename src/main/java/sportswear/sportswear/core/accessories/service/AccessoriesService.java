@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import sportswear.sportswear.core.accessories.domain.Accessories;
 import sportswear.sportswear.core.accessories.rep.AccessoriesRep;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.shoes.domain.Shoes;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class AccessoriesService {
 
     private final AccessoriesRep accessoriesRep;
 
-    public List<Accessories> getAccessories(int page, int size, Integer sizeProduct, String type, String colour, String sortBy, String direction) {
+    public AccessoriesView getAccessories(int page, int size, Integer sizeProduct, String type, String colour, String sortBy, String direction) {
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
             sort = direction != null && direction.equalsIgnoreCase("desc")
@@ -40,7 +41,11 @@ public class AccessoriesService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeBall"), sizeProduct));
         }
 
-        return accessoriesRep.findAll(spec, pageable).getContent();
+        AccessoriesView accessoriesView = new AccessoriesView();
+        accessoriesView.setItems(accessoriesRep.findAll(spec, pageable).getContent());
+        accessoriesView.setCount(accessoriesRep.findAll(spec, pageable).getTotalElements());
+
+        return accessoriesView;
     }
 
     public Accessories getAccessoriesById(Long id) {

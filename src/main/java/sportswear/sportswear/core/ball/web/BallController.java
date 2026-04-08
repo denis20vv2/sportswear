@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.ball.domain.Ball;
 import sportswear.sportswear.core.ball.service.BallService;
+import sportswear.sportswear.core.ball.view.BallView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class BallController {
             summary = "Получение списка мячей",
             description = "Позволяет получить список мячей"
     )
-    public List<Ball> getBall(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) Integer sizeBall, @RequestParam(required = false) String type, @RequestParam(required = false) String colour, @RequestParam(required = false) String material, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String direction) {
+    public BallView getBall(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) Integer sizeBall, @RequestParam(required = false) String type, @RequestParam(required = false) String colour, @RequestParam(required = false) String material, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String direction) {
         return ballService.getBall(page, size, sizeBall, type, colour, material, sortBy, direction);
     }
 

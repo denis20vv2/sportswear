@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.tshirts.domain.TShirts;
 import sportswear.sportswear.core.tshirts.service.TShirtsService;
+import sportswear.sportswear.core.tshirts.view.TShirtsView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class TShirtsController {
             summary = "Получение списка футболок",
             description = "Позволяет получить список футболок"
     )
-    public List<TShirts> getTShirts(
+    public TShirtsView getTShirts(
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false) Integer sizeTShirts,

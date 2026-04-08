@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.pants.domain.Pants;
 import sportswear.sportswear.core.pants.rep.PantsRep;
+import sportswear.sportswear.core.pants.view.PantsView;
 
 import java.util.List;
 
@@ -17,12 +19,12 @@ public class PantsService {
 
     private final PantsRep pantsRep;
 
-    public List<Pants> getPants(int page, int size,
-                                String sizePants,
-                                String colour,
-                                String material,
-                                String sortBy,
-                                String direction) {
+    public PantsView getPants(int page, int size,
+                              String sizePants,
+                              String colour,
+                              String material,
+                              String sortBy,
+                              String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -47,7 +49,11 @@ public class PantsService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizePants"), sizePants));
         }
 
-        return pantsRep.findAll(spec, pageable).getContent();
+        PantsView pantsView = new PantsView();
+        pantsView.setItems(pantsRep.findAll(spec, pageable).getContent());
+        pantsView.setCount(pantsRep.findAll(spec, pageable).getTotalElements());
+
+        return pantsView;
     }
 
     public Pants getPantsById(Long id) {

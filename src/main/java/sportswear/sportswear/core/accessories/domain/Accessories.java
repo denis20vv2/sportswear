@@ -33,7 +33,7 @@ public class Accessories {
         private String imageUrl;
 
         @NotNull
-        private Integer sizeProduct;
+        private String sizeProduct;
 
         @NotNull
         private String colour;

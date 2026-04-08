@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.sweater.domain.Sweater;
 import sportswear.sportswear.core.sweater.rep.SweaterRep;
+import sportswear.sportswear.core.sweater.view.SweaterView;
 
 import java.util.List;
 
@@ -17,12 +19,12 @@ public class SweaterService {
 
     private final SweaterRep sweaterRep;
 
-    public List<Sweater> getSweaters(int page, int size,
-                                     String sizeSweater,
-                                     String colour,
-                                     String material,
-                                     String sortBy,
-                                     String direction) {
+    public SweaterView getSweaters(int page, int size,
+                                   String sizeSweater,
+                                   String colour,
+                                   String material,
+                                   String sortBy,
+                                   String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -47,7 +49,11 @@ public class SweaterService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeSweater"), sizeSweater));
         }
 
-        return sweaterRep.findAll(spec, pageable).getContent();
+        SweaterView sweaterView = new SweaterView();
+        sweaterView.setItems(sweaterRep.findAll(spec, pageable).getContent());
+        sweaterView.setCount(sweaterRep.findAll(spec, pageable).getTotalElements());
+
+        return sweaterView;
     }
 
     public Sweater getSweaterById(Long id) {

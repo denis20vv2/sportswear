@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.inventory.domain.Inventory;
 import sportswear.sportswear.core.inventory.rep.InventoryRep;
 import sportswear.sportswear.core.inventory.service.InventoryService;
+import sportswear.sportswear.core.inventory.view.InventoryView;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class InventoryController {
             summary = "Получение списка инвентаря",
             description = "Позволяет получить список инвентаря"
     )
-    public List<Inventory> getInventory(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) String colour, @RequestParam(required = false)   String sortBy, @RequestParam(required = false)  String direction){
+    public InventoryView getInventory(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) String colour, @RequestParam(required = false)   String sortBy, @RequestParam(required = false)  String direction){
 
         return inventoryService.getInventory(page, size, colour, sortBy, direction);
 

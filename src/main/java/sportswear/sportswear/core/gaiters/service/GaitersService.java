@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.gaiters.domain.Gaiters;
 import sportswear.sportswear.core.gaiters.rep.GaitersRep;
+import sportswear.sportswear.core.gaiters.view.GaitersView;
 
 import java.util.List;
 
@@ -17,10 +19,10 @@ public class GaitersService {
 
     private final GaitersRep gaitersRep;
 
-    public List<Gaiters> getGaiters(int page, int size,
-                                    String type, String colour,
-                                    String sizeProduct,
-                                    String sortBy, String direction) {
+    public GaitersView getGaiters(int page, int size,
+                                        String type, String colour,
+                                        String sizeProduct,
+                                        String sortBy, String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -41,8 +43,11 @@ public class GaitersService {
         if (sizeProduct != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeProduct"), sizeProduct));
         }
+        GaitersView gaitersView = new GaitersView();
+        gaitersView.setItems(gaitersRep.findAll(spec, pageable).getContent());
+        gaitersView.setCount(gaitersRep.findAll(spec, pageable).getTotalElements());
 
-        return gaitersRep.findAll(spec, pageable).getContent();
+        return gaitersView;
     }
 
     public Gaiters getById(Long id) {

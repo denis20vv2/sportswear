@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.pants.domain.Pants;
 import sportswear.sportswear.core.pants.service.PantsService;
+import sportswear.sportswear.core.pants.view.PantsView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class PantsController {
             summary = "Получение списка брюк",
             description = "Возвращает список брюк с возможностью фильтрации по размеру, цвету, материалу и сортировки"
     )
-    public List<Pants> getPants(
+    public PantsView getPants(
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false) String sizePants,

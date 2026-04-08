@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.gaiters.domain.Gaiters;
 import sportswear.sportswear.core.gaiters.service.GaitersService;
+import sportswear.sportswear.core.gaiters.view.GaitersView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class GaitersController {
             summary = "Получение списка гамаш",
             description = "Позволяет получить список гамаш"
     )
-    public List<Gaiters> getGaiters(
+    public GaitersView getGaiters(
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false) String type,

@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.protectivecloth.domain.ProtectiveCloth;
 import sportswear.sportswear.core.protectivecloth.rep.ProtectiveClothRep;
+import sportswear.sportswear.core.protectivecloth.view.ProtectiveClothView;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class ProtectiveClothService {
 
     private final ProtectiveClothRep protectiveClothRep;
 
-    public List<ProtectiveCloth> getProtectiveCloth(int page, int size,
+    public ProtectiveClothView getProtectiveCloth(int page, int size,
                                                     String type, String colour,
                                                     String sizeProduct,
                                                     String sortBy, String direction) {
@@ -42,7 +44,11 @@ public class ProtectiveClothService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeProduct"), sizeProduct));
         }
 
-        return protectiveClothRep.findAll(spec, pageable).getContent();
+        ProtectiveClothView protectiveClothView = new ProtectiveClothView();
+        protectiveClothView.setItems(protectiveClothRep.findAll(spec, pageable).getContent());
+        protectiveClothView.setCount(protectiveClothRep.findAll(spec, pageable).getTotalElements());
+
+        return protectiveClothView;
     }
 
     public ProtectiveCloth getById(Long id) {

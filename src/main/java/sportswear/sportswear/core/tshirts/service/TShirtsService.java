@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.tshirts.domain.TShirts;
 import sportswear.sportswear.core.tshirts.rep.TShirtsRep;
+import sportswear.sportswear.core.tshirts.view.TShirtsView;
 
 import java.util.List;
 
@@ -17,10 +19,10 @@ public class TShirtsService {
 
     private final TShirtsRep tShirtsRep;
 
-    public List<TShirts> getTShirts(int page, int size, Integer sizeTShirts,
-                                    String type, String colour, String material,
-                                    String printType,
-                                    String sortBy, String direction) {
+    public TShirtsView getTShirts(int page, int size, Integer sizeTShirts,
+                                  String type, String colour, String material,
+                                  String printType,
+                                  String sortBy, String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -48,7 +50,11 @@ public class TShirtsService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeTShirts"), sizeTShirts));
         }
 
-        return tShirtsRep.findAll(spec, pageable).getContent();
+        TShirtsView tShirtsView = new TShirtsView();
+        tShirtsView.setItems(tShirtsRep.findAll(spec, pageable).getContent());
+        tShirtsView.setCount(tShirtsRep.findAll(spec, pageable).getTotalElements());
+
+        return tShirtsView;
     }
 
     public TShirts getTShirtsById(Long id) {

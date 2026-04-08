@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.gloves.rep.GlovesRep;
 import sportswear.sportswear.core.gloves.domain.Gloves;
+import sportswear.sportswear.core.gloves.view.GlovesView;
 
 import java.util.List;
 
@@ -17,10 +19,10 @@ public class GlovesService {
 
     private final GlovesRep glovesRep;
 
-    public List<Gloves> getGloves(int page, int size,
-                                  String type, String colour,
-                                  String sizeGloves,
-                                  String sortBy, String direction) {
+    public GlovesView getGloves(int page, int size,
+                                String type, String colour,
+                                String sizeGloves,
+                                String sortBy, String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -42,7 +44,11 @@ public class GlovesService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeGloves"), sizeGloves));
         }
 
-        return glovesRep.findAll(spec, pageable).getContent();
+        GlovesView glovesView = new GlovesView();
+        glovesView.setItems(glovesRep.findAll(spec, pageable).getContent());
+        glovesView.setCount(glovesRep.findAll(spec, pageable).getTotalElements());
+
+        return glovesView;
     }
 
     public Gloves getById(Long id) {

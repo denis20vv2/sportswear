@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.shoes.domain.Shoes;
 import sportswear.sportswear.core.shoes.service.ShoesService;
+import sportswear.sportswear.core.shoes.view.ShoesView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ShoesController {
             summary = "Получение списка обуви",
             description = "Позволяет получить список обуви"
     )
-    public List<Shoes> getShoes(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) Integer sizeShoes, @RequestParam(required = false) String type, @RequestParam(required = false) String colour, @RequestParam(required = false) String material, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String direction){
+    public ShoesView getShoes(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) Integer sizeShoes, @RequestParam(required = false) String type, @RequestParam(required = false) String colour, @RequestParam(required = false) String material, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String direction){
         return shoesService.getShoes(page, size, sizeShoes, type, colour, material, sortBy, direction);
     }
 

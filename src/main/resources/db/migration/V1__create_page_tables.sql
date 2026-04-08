@@ -10,8 +10,9 @@ CREATE TABLE contact_info
 
 CREATE TABLE filter_param
 (
-    id      BIGINT PRIMARY KEY,
-    filters JSON NOT NULL
+    id            BIGINT PRIMARY KEY,
+    filters       JSON NOT NULL,
+    filter_values JSON NOT NULL
 );
 
 CREATE TABLE page
@@ -99,7 +100,7 @@ CREATE TABLE accessories
     name         VARCHAR(255)     NOT NULL,
     price        DOUBLE PRECISION NOT NULL,
     image_url    VARCHAR(512)     NOT NULL,
-    size_product INTEGER          NOT NULL,
+    size_product VARCHAR(100)     NOT NULL,
     type         VARCHAR(100)     NOT NULL,
     colour       VARCHAR(50)      NOT NULL,
     description  VARCHAR(512)     NOT NULL
@@ -112,7 +113,7 @@ CREATE TABLE shorts
     type        VARCHAR(100)     NOT NULL,
     price       DOUBLE PRECISION NOT NULL,
     image_url   VARCHAR(500)     NOT NULL,
-    size_shorts INT              NOT NULL,
+    size_shorts VARCHAR(100)     NOT NULL,
     material    VARCHAR(100)     NOT NULL,
     colour      VARCHAR(100)     NOT NULL,
     description TEXT             NOT NULL
@@ -125,7 +126,7 @@ CREATE TABLE tshirts
     type          VARCHAR(100)     NOT NULL,
     price         DOUBLE PRECISION NOT NULL,
     image_url     VARCHAR(500)     NOT NULL,
-    size_t_shirts INT              NOT NULL,
+    size_t_shirts VARCHAR(100)     NOT NULL,
     material      VARCHAR(100)     NOT NULL,
     colour        VARCHAR(100)     NOT NULL,
     print_type    VARCHAR(100)     NOT NULL,
@@ -215,3 +216,16 @@ CREATE TABLE sports_underwear
     colour                VARCHAR(100)     NOT NULL,
     description           TEXT             NOT NULL
 );
+
+CREATE TABLE account
+(
+    id           BIGSERIAL PRIMARY KEY,
+    username     VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(255) NOT NULL,
+    basket       JSON         NOT NULL,
+    orders       JSON         NOT NULL
+);
+
+CREATE SEQUENCE account_seq
+    START WITH 1
+    INCREMENT BY 1;

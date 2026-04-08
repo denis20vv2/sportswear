@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.protectivecloth.domain.ProtectiveCloth;
 import sportswear.sportswear.core.protectivecloth.service.ProtectiveClothService;
+import sportswear.sportswear.core.protectivecloth.view.ProtectiveClothView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ProtectiveClothController {
             summary = "Получение списка защитной одежды",
             description = "Позволяет получить список защитной одежды"
     )
-    public List<ProtectiveCloth> getProtectiveCloth(
+    public ProtectiveClothView getProtectiveCloth(
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false) String type,

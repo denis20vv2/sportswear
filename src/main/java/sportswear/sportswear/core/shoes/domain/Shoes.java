@@ -33,7 +33,7 @@ public class Shoes {
     private String imageUrl;
 
     @NotNull
-    private Integer sizeShoes;
+    private String sizeShoes;
 
     @NotNull
     private String material;

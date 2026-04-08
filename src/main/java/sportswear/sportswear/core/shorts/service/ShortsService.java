@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.shorts.domain.Shorts;
 import sportswear.sportswear.core.shorts.rep.ShortsRep;
+import sportswear.sportswear.core.shorts.view.ShortView;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ public class ShortsService {
 
     private final ShortsRep shortsRep;
 
-    public List<Shorts> getShorts(int page, int size, Integer sizeShorts,
-                                  String type, String colour, String material,
-                                  String sortBy, String direction) {
+    public ShortView getShorts(int page, int size, Integer sizeShorts,
+                               String type, String colour, String material,
+                               String sortBy, String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -44,7 +46,11 @@ public class ShortsService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeShorts"), sizeShorts));
         }
 
-        return shortsRep.findAll(spec, pageable).getContent();
+        ShortView shortView = new ShortView();
+        shortView.setItems(shortsRep.findAll(spec, pageable).getContent());
+        shortView.setCount(shortsRep.findAll(spec, pageable).getTotalElements());
+
+        return shortView;
     }
 
     public Shorts getShortsById(Long id) {

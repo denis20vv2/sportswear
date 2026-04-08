@@ -12,6 +12,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -27,5 +28,9 @@ public class FilterParam {
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.JSON)
     private List<String> filters;
+
+    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.JSON)
+    private Map<String, List<String>> filterValues;
 
 }

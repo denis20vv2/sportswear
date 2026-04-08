@@ -33,7 +33,7 @@ public class Shorts {
     private String imageUrl;
 
     @NotNull
-    private Integer sizeShorts;
+    private String sizeShorts;
 
     @NotNull
     private String material;

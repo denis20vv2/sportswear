@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import sportswear.sportswear.core.accessories.view.AccessoriesView;
 import sportswear.sportswear.core.sportsunderwear.domain.SportsUnderwear;
 import sportswear.sportswear.core.sportsunderwear.rep.SportsUnderwearRep;
+import sportswear.sportswear.core.sportsunderwear.view.SportsUnderwearView;
 
 import java.util.List;
 
@@ -17,12 +19,12 @@ public class SportsUnderwearService {
 
     private final SportsUnderwearRep sportsUnderwearRep;
 
-    public List<SportsUnderwear> getSportsUnderwear(int page, int size,
-                                                    String sizeSportsUnderwear,
-                                                    String colour,
-                                                    String material,
-                                                    String sortBy,
-                                                    String direction) {
+    public SportsUnderwearView getSportsUnderwear(int page, int size,
+                                                  String sizeSportsUnderwear,
+                                                  String colour,
+                                                  String material,
+                                                  String sortBy,
+                                                  String direction) {
 
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
@@ -47,7 +49,11 @@ public class SportsUnderwearService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeSportsUnderwear"), sizeSportsUnderwear));
         }
 
-        return sportsUnderwearRep.findAll(spec, pageable).getContent();
+        SportsUnderwearView sportsUnderwearView = new SportsUnderwearView();
+        sportsUnderwearView.setItems(sportsUnderwearRep.findAll(spec, pageable).getContent());
+        sportsUnderwearView.setCount(sportsUnderwearRep.findAll(spec, pageable).getTotalElements());
+
+        return sportsUnderwearView;
     }
 
     public SportsUnderwear getById(Long id) {

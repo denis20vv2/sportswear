@@ -35,7 +35,7 @@ public class TShirts {
 
     @Column(name = "size_t_shirts")
     @NotNull
-    private Integer sizeTShirts;
+    private String sizeTShirts;
 
     @NotNull
     private String material;

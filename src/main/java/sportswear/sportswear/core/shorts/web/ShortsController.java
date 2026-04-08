@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sportswear.sportswear.core.shorts.domain.Shorts;
 import sportswear.sportswear.core.shorts.service.ShortsService;
+import sportswear.sportswear.core.shorts.view.ShortView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ShortsController {
             summary = "Получение списка шорт",
             description = "Позволяет получить список шорт"
     )
-    public List<Shorts> getShorts(
+    public ShortView getShorts(
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false) Integer sizeShorts,
