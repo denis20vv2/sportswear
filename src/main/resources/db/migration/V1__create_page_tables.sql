@@ -77,7 +77,7 @@ CREATE TABLE shoes
     name        VARCHAR(255)     NOT NULL,
     price       DOUBLE PRECISION NOT NULL,
     image_url   VARCHAR(512)     NOT NULL,
-    size_shoes  INTEGER          NOT NULL,
+    size_shoes  VARCHAR(50)      NOT NULL,
     type        VARCHAR(100)     NOT NULL,
     colour      VARCHAR(50)      NOT NULL,
     description VARCHAR(512)     NOT NULL,
@@ -217,15 +217,15 @@ CREATE TABLE sports_underwear
     description           TEXT             NOT NULL
 );
 
-CREATE TABLE account
+CREATE TABLE orders
 (
-    id           BIGSERIAL PRIMARY KEY,
-    username     VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(255) NOT NULL,
-    basket       JSON         NOT NULL,
-    orders       JSON         NOT NULL
+    id          BIGSERIAL PRIMARY KEY,
+    total_price INTEGER,
+    phone       VARCHAR(255) NOT NULL,
+    created_at  VARCHAR(255) NOT NULL,
+    items       JSON         NOT NULL
 );
 
-CREATE SEQUENCE account_seq
+CREATE SEQUENCE order_seq
     START WITH 1
     INCREMENT BY 1;

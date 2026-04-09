@@ -27,7 +27,7 @@ public class ShoesController {
             summary = "Получение списка обуви",
             description = "Позволяет получить список обуви"
     )
-    public ShoesView getShoes(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) Integer sizeShoes, @RequestParam(required = false) String type, @RequestParam(required = false) String colour, @RequestParam(required = false) String material, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String direction){
+    public ShoesView getShoes(@RequestParam(required = false, defaultValue = "10") int size, @RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false) String sizeShoes, @RequestParam(required = false) String type, @RequestParam(required = false) String colour, @RequestParam(required = false) String material, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String direction){
         return shoesService.getShoes(page, size, sizeShoes, type, colour, material, sortBy, direction);
     }
 

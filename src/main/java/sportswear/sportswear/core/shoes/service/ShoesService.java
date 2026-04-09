@@ -21,7 +21,7 @@ public class ShoesService {
 
     private final ShoesRep shoesRep;
 
-    public ShoesView getShoes(int page, int size, Integer sizeShoes, String type, String colour, String material, String sortBy, String direction) {
+    public ShoesView getShoes(int page, int size, String sizeShoes, String type, String colour, String material, String sortBy, String direction) {
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
             sort = direction != null && direction.equalsIgnoreCase("desc")
@@ -43,7 +43,7 @@ public class ShoesService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("material"), material));
         }
         if (sizeShoes != null) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeBall"), sizeShoes));
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("sizeShoes"), sizeShoes));
         }
 
         ShoesView shoesView = new ShoesView();

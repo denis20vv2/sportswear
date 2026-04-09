@@ -1,4 +1,4 @@
-package sportswear.sportswear.core.account.web;
+package sportswear.sportswear.core.order.web;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
