@@ -87,7 +87,7 @@ VALUES (5, '["colour","type","sizeBall","material"]', '{
 
 INSERT INTO page (id, page_name, contact_info_id, filter_id)
 VALUES (1,
-        'Главная',
+        'Sportswear store',
         1,
         null),
        (3,
